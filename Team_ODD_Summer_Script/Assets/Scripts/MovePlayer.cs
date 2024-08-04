@@ -252,7 +252,7 @@ public class MovePlayer : MonoBehaviour
 
             movement.Normalize();
 
-            playerSpeed = 1f;
+            playerSpeed = 5f;
         }
 
         else if (isDashing)
@@ -275,6 +275,11 @@ public class MovePlayer : MonoBehaviour
     private void StartDash()
     {
         isDashing = true;
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isAttack1", false);
+        anim.SetBool("isAttack2", false);
+        anim.SetBool("isAttack3", false);
+        anim.SetBool("isMove", true);
         anim.SetBool("isDash", true);
         gameObject.tag = "DashingPlayer";
         countDashTime = 0f;
