@@ -45,7 +45,6 @@ public class PlayerUI : MonoBehaviour
         if (HpBarSlider != null)
         {
             HpBarSlider.value = currentHealth / maxHealth;
-            textHP.text = currentHealth + " / " + maxHealth;
         }
     }
 
@@ -54,6 +53,7 @@ public class PlayerUI : MonoBehaviour
 
         if (countDamageDelay >= damageDelay)
         {
+            countDamageDelay = 0f;
             if (maxHealth == 0 || currentHealth <= 0) //* 이미 체력 0이하면 패스
                 return;
             currentHealth -= damage;
@@ -66,7 +66,6 @@ public class PlayerUI : MonoBehaviour
             Die();    
         }
 
-        countDamageDelay = 0f;
     }
 
     public void Die()
