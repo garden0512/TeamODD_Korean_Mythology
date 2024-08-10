@@ -12,7 +12,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] public static float damage = 30f;
     [SerializeField] private float damageDelay = 2f;
     public Slider HpBarSlider;
-    [SerializeField] private TextMeshProUGUI textHP;
+    public TMP_Text textHP;
     
     public Image img_Skill1;
     public Image img_Skill2;    
@@ -25,7 +25,6 @@ public class PlayerUI : MonoBehaviour
     }
     private void Update()
     {
-
         if (currentHealth <= 0)
         {
             Die();
@@ -35,9 +34,9 @@ public class PlayerUI : MonoBehaviour
         {
             Damage(damage);
         }
-    }
 
-    public void SetHp(float amount) //*Hp설정
+    }
+        public void SetHp(float amount) //*Hp설정
     {
         maxHealth = amount;
         currentHealth = maxHealth;
@@ -48,7 +47,7 @@ public class PlayerUI : MonoBehaviour
         if (HpBarSlider != null)
         {
             HpBarSlider.value = currentHealth / maxHealth;
-
+            textHP.text = currentHealth.ToString() + " / " + maxHealth.ToString();
         }
     }
 
