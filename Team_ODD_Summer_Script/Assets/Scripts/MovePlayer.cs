@@ -42,12 +42,19 @@ public class MovePlayer : MonoBehaviour
     private float countDashTime = 0f;
     public static float countCoolTime = 0f;
 
+    public GameObject AttackEffectObject;
+    private Vector2 EffectPosition = Vector2.zero;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
         rd = GetComponent<Rigidbody2D>();
     }
+    private void Start()
+    {
+        AttackEffectObject.SetActive(false);
+    }
+
     void Update()
     {
         PlayerRotation();
@@ -344,6 +351,11 @@ public class MovePlayer : MonoBehaviour
 
         _playerRotation.x = snappedDirection.x;
         _playerRotation.y = snappedDirection.y;
+
+        EffectPosition = transform.position + transform.forward * 5f;
+        AttackEffectObject.transform.position = EffectPosition;
+
+        AttackEffectObject.SetActive(true);
     }
     private void EndAttack()
     {
@@ -354,6 +366,7 @@ public class MovePlayer : MonoBehaviour
         anim.SetBool("isAttack1", false);
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack3", false);
+        AttackEffectObject.SetActive(false);
 
         if (Input.GetKey(KeyCode.W))
         {

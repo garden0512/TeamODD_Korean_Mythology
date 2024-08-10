@@ -13,7 +13,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private float damageDelay = 2f;
     private float countDamageDelay = 2f;
     public Slider HpBarSlider;
-    [SerializeField] private TextMeshProUGUI textHP;
+    public TMP_Text textHP;
     
     public Image img_Skill1;
     public Image img_Skill2;    
@@ -26,40 +26,42 @@ public class PlayerUI : MonoBehaviour
     }
     private void Update()
     {
-        countDamageDelay += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
+        if (MovePlayer.getHitted == true)
         {
             Damage(damage);
         }
-
     }
-
-    public void SetHp(float amount) //*Hp¼³Á¤
+        public void SetHp(float amount) //*Hpì„¤ì •
     {
         maxHealth = amount;
         currentHealth = maxHealth;
     }
 
-    public void CheckHp() //*HP °»½Å
+    public void CheckHp() //*HP ê°±ì‹ 
     {
         if (HpBarSlider != null)
         {
             HpBarSlider.value = currentHealth / maxHealth;
-            textHP.text = currentHealth + " / " + maxHealth;
+            textHP.text = currentHealth.ToString() + " / " + maxHealth.ToString();
         }
     }
 
-    public void Damage(float damage) //* µ¥¹ÌÁö ¹Þ´Â ÇÔ¼ö
+    public void Damage(float damage) //* ë°ë¯¸ì§€ ë°›ëŠ” í•¨ìˆ˜
     {
 
         if (countDamageDelay >= damageDelay)
         {
-            if (maxHealth == 0 || currentHealth <= 0) //* ÀÌ¹Ì Ã¼·Â 0ÀÌÇÏ¸é ÆÐ½º
+            if (maxHealth == 0 || currentHealth <= 0) //* ì´ë¯¸ ì²´ë ¥ 0ì´í•˜ë©´ íŒ¨ìŠ¤
                 return;
             currentHealth -= damage;
         }
 
-        CheckHp(); //* Ã¼·Â °»½Å
+        CheckHp(); //* ì²´ë ¥ ê°±ì‹ 
 
         if (currentHealth <= 0)
         {
