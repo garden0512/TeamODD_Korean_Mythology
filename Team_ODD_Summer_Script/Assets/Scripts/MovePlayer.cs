@@ -13,6 +13,7 @@ public class MovePlayer : MonoBehaviour
 
     Rigidbody2D rd;
     Animator anim;
+    SpriteRenderer spriteRenderer;
 
     private float playerSpeed = 0f;
     public float moveSpeed = 10.0f;
@@ -31,6 +32,8 @@ public class MovePlayer : MonoBehaviour
     private bool attackcombo1 = true;
     private bool attackcombo2 = false;
     private bool attackcombo3 = false;
+    public static bool getHitted = false;
+    public static bool muzeok = false;
 
     [SerializeField] public float attackDuration1 = 0.35f;
     [SerializeField] public float attackDuration2 = 0.35f;
@@ -47,6 +50,7 @@ public class MovePlayer : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rd = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
@@ -270,8 +274,6 @@ public class MovePlayer : MonoBehaviour
         rd.velocity = movement * playerSpeed;
     }
         
-
-    
     private void StartDash()
     {
         isDashing = true;
@@ -378,22 +380,40 @@ public class MovePlayer : MonoBehaviour
         attackcombo2 = false;
         attackcombo3 = false;
     }
-    
-    /*void OnTriggerEnter2D(Collider2D other)
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player" && getHitted == false)
         {
-            if (!isKnockedBack)
-            {
-                movement.x = -Input.GetAxisRaw("Horizontal");
-                movement.y = -Input.GetAxisRaw("Vertical");
-
-                movement.Normalize();
-
-                isKnockedBack = true;
-                knockTime = 0;
-            }
+            getHitted = true;
+            StartCoroutine("BlinkTime");
         }
-    }*/
+    }
+
+    IEnumerator BlinkTime()
+    {
+        int countTime = 0;
+        PlayerUI.currentHealth -= PlayerUI.damage;
+        while (countTime < 6)
+        {
+            if (countTime % 2 == 0)
+            {
+                spriteRenderer.color = new Color32(255, 255, 255, 150);
+            }
+            else
+            {
+                spriteRenderer.color = new Color32(255, 255, 255, 200);
+            }
+
+            yield return new WaitForSeconds(0.3f);
+
+            countTime++;
+        }
+
+        getHitted = false;
+        spriteRenderer.color = new Color32(255, 255, 255, 255);
+             
+        yield return null;
+    }
 
 }
