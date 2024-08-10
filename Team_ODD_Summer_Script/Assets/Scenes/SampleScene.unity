@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 129119347}
   - component: {fileID: 129119346}
   m_Layer: 5
-  m_Name: textHP
+  m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -327,7 +327,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258548808}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -352,8 +352,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.006680767, y: 0.16431835}
-  m_Size: {x: 0.44285187, y: 0.52947474}
+  m_Offset: {x: -0.017621517, y: 0.16978878}
+  m_Size: {x: 0.46473336, y: 0.5404154}
   m_Direction: 0
 --- !u!114 &258548819
 MonoBehaviour:
@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
+  damage: 30
   damageDelay: 2
   HpBarSlider: {fileID: 427536004}
   textHP: {fileID: 0}
@@ -1530,7 +1531,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -2.4587402, y: 0}
+  m_AnchoredPosition: {x: -2.4587097, y: 0}
   m_SizeDelta: {x: 4.9175, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1237188186
@@ -1691,6 +1692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 150
+  damage: 30
   damageDelay: 2
   HpBarSlider: {fileID: 427536004}
   textHP: {fileID: 129119346}
@@ -1823,7 +1825,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2032,10 +2034,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2769495870178670970, guid: 0737acb13a4e6144bac8f83d78376d52, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3820741013839462605, guid: 0737acb13a4e6144bac8f83d78376d52, type: 3}
       propertyPath: m_LocalScale.x
       value: 3

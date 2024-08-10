@@ -8,9 +8,10 @@ using TMPro;
 public class PlayerUI : MonoBehaviour
 {
     public float maxHealth = 150f;
-    public static float currentHealth;
-    [SerializeField] public static float damage = 30f;
+    protected float currentHealth;
+    [SerializeField] private float damage = 30f;
     [SerializeField] private float damageDelay = 2f;
+    private float countDamageDelay = 2f;
     public Slider HpBarSlider;
     [SerializeField] private TextMeshProUGUI textHP;
     
@@ -18,23 +19,19 @@ public class PlayerUI : MonoBehaviour
     public Image img_Skill2;    
     public float count1 = 0f;
     public float count2 = 0f;
-    
+
     public void Start()
     {
         SetHp(150f);
     }
     private void Update()
     {
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-
-        if (MovePlayer.getHitted == true)
+        countDamageDelay += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Damage(damage);
         }
+
     }
 
     public void SetHp(float amount) //*Hp설정
@@ -48,21 +45,33 @@ public class PlayerUI : MonoBehaviour
         if (HpBarSlider != null)
         {
             HpBarSlider.value = currentHealth / maxHealth;
-
+            textHP.text = currentHealth + " / " + maxHealth;
         }
     }
 
     public void Damage(float damage) //* 데미지 받는 함수
     {
-       /* if (maxHealth == 0 || currentHealth <= 0) //* 이미 체력 0이하면 패스
-            return;*/
+
+        if (countDamageDelay >= damageDelay)
+        {
+            if (maxHealth == 0 || currentHealth <= 0) //* 이미 체력 0이하면 패스
+                return;
+            currentHealth -= damage;
+        }
 
         CheckHp(); //* 체력 갱신
+
+        if (currentHealth <= 0)
+        {
+            Die();    
+        }
+
+        countDamageDelay = 0f;
     }
 
     public void Die()
     {
-        return;
+
     }
 
 
