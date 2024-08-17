@@ -7,7 +7,7 @@ public class WT_Control : MonoBehaviour
     public static WT_Control instance;
     [Tooltip("몬스터(백호)의 움직임에 관한 변수들입니다.")]
     [Header("Monster Move Info")]
-    public static float speed;
+    public float speed;
     private Vector2 randomDirection;
     private float changeDirectionTime = 2f;
     private float changeDirectionTimer;
@@ -65,7 +65,7 @@ public class WT_Control : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isLive || isAttacking)
+        if (!isLive || isAttacking || wtskill.isRushing)
             return;
 
         float distanceToPlayer = Vector2.Distance(rigid.position, target.position);
@@ -156,25 +156,6 @@ public class WT_Control : MonoBehaviour
                 break;
         }
     }
-    // IEnumerator PerformAttack()
-    // {
-    //     isAttacking = true;
-    //     attackTimer = attackInterval;
-    //     initialAttackPosition = rigid.position;
-
-    //     yield return new WaitForSeconds(0.5f);
-
-    //     PlayerUI playerHealth = target.GetComponent<PlayerUI>();
-    //     if(playerHealth != null)
-    //     {
-    //         playerHealth.Damage(10f);
-    //     }
-
-    //     yield return new WaitForSeconds(0.5f);
-
-    //     isAttacking = false;
-    // }
-
 
     public void TakeDamage(float damage)
     {
