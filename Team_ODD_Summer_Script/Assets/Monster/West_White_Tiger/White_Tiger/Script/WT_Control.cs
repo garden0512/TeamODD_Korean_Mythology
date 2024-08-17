@@ -85,12 +85,12 @@ public class WT_Control : MonoBehaviour
                 rigid.MovePosition(rigid.position + nextVec);
             }
             _isPlayerInRange = true;
-            Debug.Log("isPlayerInRange = true");
+            //Debug.Log("isPlayerInRange = true");
         }
         else
         {
             _isPlayerInRange = false;
-            Debug.Log("isPlayerInRange = false");
+            //Debug.Log("isPlayerInRange = false");
             changeDirectionTimer -= Time.fixedDeltaTime;
             if (changeDirectionTimer <= 0)
             {
