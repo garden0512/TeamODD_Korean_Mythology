@@ -6,7 +6,7 @@ public class WT_Skill : MonoBehaviour
 {
     public Rigidbody2D target;
     private bool isAttacking = false;
-    private bool isRushing = false;
+    public bool isRushing = false;
     private float attackInterval = 3f;
     private float attackTimer;
     private Rigidbody2D rigid;
@@ -18,7 +18,16 @@ public class WT_Skill : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         attackTimer = attackInterval;
+        //control = WT_Control.instance;
+    }
+
+    void Start()
+    {
         control = WT_Control.instance;
+        if (control == null)
+        {
+            Debug.LogError("WT_Control 인스턴스를 찾을 수 없습니다. WT_Control 스크립트가 제대로 할당되었는지 확인하십시오.");
+        }
     }
 
     //종(가로)베기
@@ -50,11 +59,11 @@ public class WT_Skill : MonoBehaviour
     //돌진
     public void Rush()
     {
-        // if(isRushing)
-        // {
-        //     return;
-        // }
-        // StartCoroutine(RushToPlayer());
+        if(isRushing)
+        {
+            return;
+        }
+        StartCoroutine(RushToPlayer());
     }
 
     //은신
@@ -88,34 +97,33 @@ public class WT_Skill : MonoBehaviour
         isAttacking = false;
     }
 
-    // IEnumerator RushToPlayer()
-    // {
-    //     isRushing = true;
-    //     float rushDuration = 6f;
-    //     float rushSpeed = WT_Control.speed * rushSpeedMultiplier;
-    //     Vector2 direction = (target.position - rigid.position).normalized;
-    //     while (rushDuration > 0f)
-    //     {
-    //         rigid.velocity = direction * rushSpeed;
-    //         float distanceToPlayer = Vector2.Distance(rigid.position, target.position);
-    //         if (distanceToPlayer <= 1f) // 충돌 감지 거리
-    //         {
-    //             Debug.Log("제압 실행");
-    //             // 여기에 제압 스킬 발동 로직을 추가할 수 있습니다.
-    //             break;
-    //         }
-    //         rushDuration -= Time.deltaTime;
-    //         yield return null;
-    //     }
-    //     rigid.velocity = Vector2.zero;
-    //     isRushing = false;
-    // }
+    IEnumerator RushToPlayer()
+    {
+        isRushing = true;
+        float rushDuration = 6f;
+        float rushSpeed = control.speed * rushSpeedMultiplier;
+        Vector2 direction = (target.position - rigid.position).normalized;
+        while (rushDuration > 0f)
+        {
+            rigid.velocity = direction * rushSpeed;
+            float distanceToPlayer = Vector2.Distance(rigid.position, target.position);
+            if (distanceToPlayer <= 1f)
+            {
+                Debug.Log("제압 실행");
+                break;
+            }
+            rushDuration -= Time.deltaTime;
+            yield return null;
+        }
+        rigid.velocity = Vector2.zero;
+        isRushing = false;
+    }
 
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     if (isRushing && collision.gameObject.CompareTag("Player"))
-    //     {
-    //         Debug.Log("제압 실행");
-    //     }
-    // }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isRushing && collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("제압 실행");
+        }
+    }
 }

@@ -11,6 +11,7 @@ public class isometricCamera : MonoBehaviour
     public float offsetZ = 0f;
 
     public GameObject player;
+    private bool isFollowingPlayer = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +23,17 @@ public class isometricCamera : MonoBehaviour
     {
         transform.position = new Vector3(player.transform.position.x + offsetX,
             player.transform.position.y + offsetY, player.transform.position.z + offsetZ);
+    }
+
+    public void FocusOnPosition(Vector3 position)
+    {
+        isFollowingPlayer = false;
+        transform.position = position;
+    }
+
+    // 플레이어 추적을 다시 시작
+    public void ResumeFollowingPlayer()
+    {
+        isFollowingPlayer = true;
     }
 }
