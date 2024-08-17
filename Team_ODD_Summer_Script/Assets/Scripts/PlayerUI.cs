@@ -58,6 +58,7 @@ public class PlayerUI : MonoBehaviour
         {
             if (maxHealth == 0 || currentHealth <= 0) //* 이미 체력 0이하면 패스
                 return;
+            currentHealth -= damage;
         }
 
         CheckHp(); //* 체력 갱신
