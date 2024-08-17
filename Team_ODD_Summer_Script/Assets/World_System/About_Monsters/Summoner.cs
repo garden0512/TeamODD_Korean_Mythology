@@ -77,6 +77,7 @@ public class Summoner : MonoBehaviour
         // y 키를 눌렀는지 확인
         if (Input.GetKeyDown(KeyCode.Y))
         {
+            Debug.Log("Y");
             if (!waitingForY)
             {
                 waitingForY = true;
@@ -87,6 +88,7 @@ public class Summoner : MonoBehaviour
         // g 키를 눌렀는지 확인
         if (Input.GetKeyDown(KeyCode.G))
         {
+            Debug.Log("G");
             if (waitingForY)
             {
                 Kill_Mob++;

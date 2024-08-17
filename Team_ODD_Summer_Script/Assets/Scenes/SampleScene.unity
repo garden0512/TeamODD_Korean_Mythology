@@ -1753,6 +1753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 795486152}
+  - component: {fileID: 795486153}
   m_Layer: 0
   m_Name: World_Spawn
   m_TagString: Untagged
@@ -1775,6 +1776,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &795486153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795486151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb3ba3b5e387d8498ea247167d21acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tempo_EnemyPrefab: {fileID: 8800680725506266399, guid: 9cfc7c8bd109ab34999a72b85ad48c1b, type: 3}
+  WT_Test: {fileID: 67564169}
+  Background: {fileID: 678231149}
+  spawnPoint: {fileID: 67564175}
+  spawnInterval: 5
 --- !u!1 &838576216
 GameObject:
   m_ObjectHideFlags: 0
