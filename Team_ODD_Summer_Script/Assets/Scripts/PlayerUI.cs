@@ -8,8 +8,8 @@ using TMPro;
 public class PlayerUI : MonoBehaviour
 {
     public float maxHealth = 150f;
-    protected float currentHealth;
-    [SerializeField] private float damage = 30f;
+    public static float currentHealth;
+    [SerializeField] public static float damage = 30f;
     [SerializeField] private float damageDelay = 2f;
     private float countDamageDelay = 2f;
     public Slider HpBarSlider;
@@ -58,7 +58,6 @@ public class PlayerUI : MonoBehaviour
         {
             if (maxHealth == 0 || currentHealth <= 0) //* 이미 체력 0이하면 패스
                 return;
-            currentHealth -= damage;
         }
 
         CheckHp(); //* 체력 갱신
