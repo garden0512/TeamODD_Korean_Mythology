@@ -143,7 +143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &67564170
 Rigidbody2D:
   serializedVersion: 4
@@ -1793,6 +1793,10 @@ MonoBehaviour:
   Background: {fileID: 678231149}
   spawnPoint: {fileID: 67564175}
   spawnInterval: 5
+  BossHP: {fileID: 243836487}
+  BossBar_h: {fileID: 683206966}
+  WT_name: {fileID: 515202594}
+  WT_title: {fileID: 1871386388}
 --- !u!1 &838576216
 GameObject:
   m_ObjectHideFlags: 0
