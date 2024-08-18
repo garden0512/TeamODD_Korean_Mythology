@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Summoner : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class Summoner : MonoBehaviour
     public float spawnInterval = 5.0f;
     private int Kill_Mob = 0;
     private isometricCamera Bosscam;
+    public GameObject BossHP;
+    public GameObject BossBar_h;
+    public GameObject WT_name;
+    public GameObject WT_title;
 //개발자 확인용
     private bool waitingForY = false;
     private bool waitingForG = false;
@@ -19,6 +24,10 @@ public class Summoner : MonoBehaviour
     {
         Bosscam = Camera.main.GetComponent<isometricCamera>();
         StartSpawning();
+        BossHP.SetActive(false);
+        BossBar_h.SetActive(false);
+        WT_name.SetActive(false);
+        WT_title.SetActive(false);
     }
 
     public void StartSpawning()
@@ -48,6 +57,7 @@ public class Summoner : MonoBehaviour
         Kill_Mob ++;
         if(Kill_Mob >= 10)
         {
+            Debug.Log("보스 소환");
             Boss_Active();
         }
     }
@@ -58,6 +68,10 @@ public class Summoner : MonoBehaviour
         WT_Test.SetActive(true);
         Bosscam.FocusOnPosition(new Vector3(spawnPoint.position.x, spawnPoint.position.y, Bosscam.transform.position.z));
         StartCoroutine(Camera_Delay());
+        BossHP.SetActive(true);
+        BossBar_h.SetActive(true);
+        WT_name.SetActive(true);
+        WT_title.SetActive(true);
     }
 
     IEnumerator Camera_Delay()
