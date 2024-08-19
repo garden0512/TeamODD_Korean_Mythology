@@ -19,7 +19,7 @@ public class Second_Changer : MonoBehaviour
     public void ChangeToRealMenu()
     {
         // 페이드 아웃을 실행하고 씬 전환
-        StartCoroutine(FadeToScene("SimpleScene"));
+        StartCoroutine(FadeToScene("SampleScene"));
     }
 
     public void EndGame()

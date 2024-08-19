@@ -101,20 +101,31 @@ public class WT_Skill : MonoBehaviour
     {
         isRushing = true;
         float rushDuration = 6f;
-        float rushSpeed = control.speed * rushSpeedMultiplier;
+        float halfDuration = rushDuration / 2f;
+        float elapsedTime = 0f;
         Vector2 direction = (target.position - rigid.position).normalized;
-        while (rushDuration > 0f)
+
+        while (elapsedTime < rushDuration)
         {
-            rigid.velocity = direction * rushSpeed;
+            // Calculate smooth speed based on the time elapsed
+            float t = elapsedTime < halfDuration 
+                ? Mathf.SmoothStep(0, 1, elapsedTime / halfDuration)  // Accelerate in the first half
+                : Mathf.SmoothStep(1, 0, (elapsedTime - halfDuration) / halfDuration);  // Decelerate in the second half
+
+            float currentSpeed = control.speed * rushSpeedMultiplier * t;
+            rigid.velocity = direction * currentSpeed;
+
             float distanceToPlayer = Vector2.Distance(rigid.position, target.position);
             if (distanceToPlayer <= 1f)
             {
                 Debug.Log("제압 실행");
                 break;
             }
-            rushDuration -= Time.deltaTime;
+
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         rigid.velocity = Vector2.zero;
         isRushing = false;
     }
