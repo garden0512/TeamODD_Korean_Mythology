@@ -3349,9 +3349,9 @@ MonoBehaviour:
   moveSpeed: 10
   dashSpeed: 80
   dashDuration: 0.1625
-  attackDuration1: 0.35
-  attackDuration2: 0.35
-  attackDuration3: 0.5
+  attackDuration1: 0.2
+  attackDuration2: 0.2
+  attackDuration3: 0.35
   comboDuration: 1
   AttackEffectObject: {fileID: 584300642}
 --- !u!1660057539 &9223372036854775807
