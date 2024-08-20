@@ -24,7 +24,7 @@ public class WT_Control : MonoBehaviour
     [Tooltip("몬스터(백호)의 체력에 대한 변수들입니다.")]
     [Header("Monster HP Info")]
     public float maxHealth = 1000f;
-    private float _health;
+    public static float _health;
     public float health
     {
         get => _health;
@@ -67,6 +67,8 @@ public class WT_Control : MonoBehaviour
     {
         if (!isLive || isAttacking || wtskill.isRushing)
             return;
+
+        TakeDamage();
 
         float distanceToPlayer = Vector2.Distance(rigid.position, target.position);
 
@@ -157,12 +159,11 @@ public class WT_Control : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage()
     {
         if (!isLive)
             return;
 
-        _health -= damage;
         if (_health <= 0)
         {
             Die();
