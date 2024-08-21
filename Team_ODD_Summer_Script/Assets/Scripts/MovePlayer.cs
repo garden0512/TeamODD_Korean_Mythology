@@ -14,7 +14,6 @@ public class MovePlayer : MonoBehaviour
     Rigidbody2D rd;
     Animator anim;
     SpriteRenderer spriteRenderer;
-
     private float playerSpeed = 0f;
     public float moveSpeed = 10.0f;
 
