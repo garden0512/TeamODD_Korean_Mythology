@@ -18,7 +18,7 @@ public class MovePlayer : MonoBehaviour
     private float playerSpeed = 0f;
     public float moveSpeed = 10.0f;
 
-    [SerializeField] private float dashSpeed = 50.0f;
+    [SerializeField] private float dashSpeed = 80.0f;
     [SerializeField] private float dashDuration = 0.1625f;
     [SerializeField] public static float dashCooltime = 0.935f;
     
@@ -35,12 +35,12 @@ public class MovePlayer : MonoBehaviour
     public static bool getHitted = false;
     public static bool muzeok = false;
 
-    [SerializeField] public float attackDuration1 = 0.35f;
-    [SerializeField] public float attackDuration2 = 0.35f;
+    [SerializeField] public float attackDuration1 = 0.25f;
+    [SerializeField] public float attackDuration2 = 0.25f;
     [SerializeField] public float attackDuration3 = 0.5f;
     [SerializeField] public static float comboDuration = 1f;
 
-    private float countAttackTime = 0f;
+    public static float countAttackTime = 0f;
     public static float countComboTime = 0f;
     private float countDashTime = 0f;
     public static float countCoolTime = 0f;
@@ -230,7 +230,7 @@ public class MovePlayer : MonoBehaviour
             AttackCombo();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && countCoolTime <= 0f && isMoving)
+        else if (Input.GetKeyDown(KeyCode.Space) && countCoolTime <= 0f && isMoving)
         {
             EndAttack();
 
@@ -263,14 +263,19 @@ public class MovePlayer : MonoBehaviour
 
             movement.Normalize();
 
-            playerSpeed = 5f;
+            playerSpeed = 1f;
+
+            if(attackcombo3 == true && countAttackTime >= attackDuration3 - 0.3f)
+            {
+                playerSpeed = 5f;
+            }
         }
 
         else if (isDashing)
         {
-            if (countDashTime >= dashDuration - 0.075f)
+            if (countDashTime >= dashDuration - 0.095f)
             {
-                playerSpeed = 0.5f;
+                playerSpeed = 1f;
             }
             else
             {
@@ -286,10 +291,6 @@ public class MovePlayer : MonoBehaviour
     private void StartDash()
     {
         isDashing = true;
-        anim.SetBool("isAttack", false);
-        anim.SetBool("isAttack1", false);
-        anim.SetBool("isAttack2", false);
-        anim.SetBool("isAttack3", false);
         anim.SetBool("isMove", true);
         anim.SetBool("isDash", true);
         gameObject.tag = "DashingPlayer";

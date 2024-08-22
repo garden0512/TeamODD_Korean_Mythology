@@ -1958,9 +1958,9 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &965333952
@@ -2538,8 +2538,7 @@ MonoBehaviour:
   HpBarSlider: {fileID: 427536004}
   ComboSlider: {fileID: 871403031}
   DashCoolTimeImage: {fileID: 1940206315}
-  img_Skill2: {fileID: 965333951}
-  count2: 0
+  AttackCoolTimeImage: {fileID: 965333951}
 --- !u!1 &1401337923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,7 +3094,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -3405,9 +3404,9 @@ MonoBehaviour:
   moveSpeed: 10
   dashSpeed: 80
   dashDuration: 0.1625
-  attackDuration1: 0.2
-  attackDuration2: 0.2
-  attackDuration3: 0.35
+  attackDuration1: 0.25
+  attackDuration2: 0.25
+  attackDuration3: 0.5
   AttackEffectObject: {fileID: 584300642}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

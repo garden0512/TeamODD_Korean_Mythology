@@ -48,7 +48,12 @@ public class PlayerUI : MonoBehaviour
             DashCoolTimeImage.fillAmount = MovePlayer.countCoolTime / MovePlayer.dashCooltime;
 
         }
+        if (MovePlayer.countAttackTime <= 0.3f)
+        {
+            AttackCoolTimeImage.fillAmount = (0.25f-MovePlayer.countAttackTime) / 0.25f;
 
+        }
+        
     }
 
     public void SetHp(float amount) //*Hp설정
