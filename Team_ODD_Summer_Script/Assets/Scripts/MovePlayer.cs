@@ -38,10 +38,10 @@ public class MovePlayer : MonoBehaviour
     [SerializeField] public float attackDuration1 = 0.35f;
     [SerializeField] public float attackDuration2 = 0.35f;
     [SerializeField] public float attackDuration3 = 0.5f;
-    [SerializeField] private float comboDuration = 1f;
+    [SerializeField] public static float comboDuration = 1f;
 
     private float countAttackTime = 0f;
-    private float countComboTime = 0f;
+    public static float countComboTime = 0f;
     private float countDashTime = 0f;
     public static float countCoolTime = 0f;
 
@@ -180,7 +180,7 @@ public class MovePlayer : MonoBehaviour
     private void Skills()
     {
         countComboTime += Time.deltaTime;
-        countCoolTime += Time.deltaTime;
+        countCoolTime -= Time.deltaTime;
 
         if (countComboTime > comboDuration)
         {
@@ -230,7 +230,7 @@ public class MovePlayer : MonoBehaviour
             AttackCombo();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && countCoolTime >= dashCooltime && isMoving)
+        if (Input.GetKeyDown(KeyCode.Space) && countCoolTime <= 0f && isMoving)
         {
             EndAttack();
 
@@ -294,7 +294,7 @@ public class MovePlayer : MonoBehaviour
         anim.SetBool("isDash", true);
         gameObject.tag = "DashingPlayer";
         countDashTime = 0f;
-        countCoolTime = 0f;
+        countCoolTime = dashCooltime;
     }
     private void EndDash()
     {
@@ -398,7 +398,7 @@ public class MovePlayer : MonoBehaviour
         attackcombo3 = false;
     }
     
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player" && getHitted == false)
         {
@@ -411,11 +411,11 @@ public class MovePlayer : MonoBehaviour
     {
         int countTime = 0;
         PlayerUI.currentHealth -= PlayerUI.damage;
-        while (countTime < 6)
+        while (countTime < 4)
         {
             if (countTime % 2 == 0)
             {
-                spriteRenderer.color = new Color32(255, 255, 255, 150);
+                spriteRenderer.color = new Color32(255, 255, 255, 130);
             }
             else
             {
