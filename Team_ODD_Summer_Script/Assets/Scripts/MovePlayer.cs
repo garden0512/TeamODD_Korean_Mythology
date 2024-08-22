@@ -355,9 +355,11 @@ public class MovePlayer : MonoBehaviour
         _playerRotation.x = snappedDirection.x;
         _playerRotation.y = snappedDirection.y;
 
-        EffectPosition = transform.position + transform.forward * 5f;
-        AttackEffectObject.transform.position = EffectPosition;
+        EffectPosition = (Vector2)transform.position + snappedDirection * 4f;
+        Quaternion effectRotation = Quaternion.Euler(0, 0, angle);
 
+        AttackEffectObject.transform.position = EffectPosition;
+        AttackEffectObject.transform.rotation = effectRotation;
         AttackEffectObject.SetActive(true);
     }
     private void EndAttack()
