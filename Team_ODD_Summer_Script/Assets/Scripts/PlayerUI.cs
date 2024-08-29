@@ -10,15 +10,12 @@ public class PlayerUI : MonoBehaviour
     public float maxHealth = 150f;
     public static float currentHealth;
     [SerializeField] public static float damage = 30f;
-    [SerializeField] private float damageDelay = 2f;
-    private float countDamageDelay = 2f;
     public Slider HpBarSlider;
-    public TMP_Text textHP;
+    public Slider ComboSlider;
+    //public TMP_Text textHP;
     
-    public Image img_Skill1;
-    public Image img_Skill2;    
-    public float count1 = 0f;
-    public float count2 = 0f;
+    public Image DashCoolTimeImage;
+    public Image AttackCoolTimeImage;    
 
     public void Start()
     {
@@ -35,8 +32,31 @@ public class PlayerUI : MonoBehaviour
         {
             Damage(damage);
         }
+
+
     }
-        public void SetHp(float amount) //*Hp설정
+
+    private void FixedUpdate()
+    {
+        if(MovePlayer.countComboTime <= MovePlayer.comboDuration)
+        {
+            ComboSlider.value = MovePlayer.countComboTime / MovePlayer.comboDuration;
+
+        }
+        if (MovePlayer.countCoolTime <= MovePlayer.dashCooltime)
+        {
+            DashCoolTimeImage.fillAmount = MovePlayer.countCoolTime / MovePlayer.dashCooltime;
+
+        }
+        if (MovePlayer.countAttackTime <= 0.3f)
+        {
+            AttackCoolTimeImage.fillAmount = (0.25f-MovePlayer.countAttackTime) / 0.25f;
+
+        }
+        
+    }
+
+    public void SetHp(float amount) //*Hp설정
     {
         maxHealth = amount;
         currentHealth = maxHealth;
@@ -47,19 +67,13 @@ public class PlayerUI : MonoBehaviour
         if (HpBarSlider != null)
         {
             HpBarSlider.value = currentHealth / maxHealth;
-            textHP.text = currentHealth.ToString() + " / " + maxHealth.ToString();
+
+            //textHP.text = currentHealth.ToString() + " / " + maxHealth.ToString();
         }
     }
 
     public void Damage(float damage) //* 데미지 받는 함수
     {
-
-        if (countDamageDelay >= damageDelay)
-        {
-            if (maxHealth == 0 || currentHealth <= 0) //* 이미 체력 0이하면 패스
-                return;
-        }
-
         CheckHp(); //* 체력 갱신
 
         if (currentHealth <= 0)
@@ -67,13 +81,11 @@ public class PlayerUI : MonoBehaviour
             Die();    
         }
 
-        countDamageDelay = 0f;
     }
 
     public void Die()
     {
 
     }
-
 
 }
