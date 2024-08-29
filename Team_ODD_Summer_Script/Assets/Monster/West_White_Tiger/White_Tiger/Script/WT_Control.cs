@@ -105,12 +105,12 @@ public class WT_Control : MonoBehaviour
         rigid.velocity = Vector2.zero;
     }
 
-    void LateUpdate()
-    {
-        if (!isLive || isAttacking)
-            return;
-        spriter.flipX = target.position.x < rigid.position.x;
-    }
+    // void LateUpdate()
+    // {
+    //     if (!isLive || isAttacking)
+    //         return;
+    //     spriter.flipX = target.position.x < rigid.position.x;
+    // }
 
     void SetRandomDirection()
     {
