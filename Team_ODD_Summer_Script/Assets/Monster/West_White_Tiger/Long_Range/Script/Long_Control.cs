@@ -53,6 +53,8 @@ public class Long_Control : MonoBehaviour
     private static readonly int Vertical = Animator.StringToHash("Vertical");
     private float lastHorizontal = 0f;
     private float lastVertical = 0f;
+    private bool isHeal = false;
+    private float NOD = 0f;
 
     void Awake()
     {
@@ -160,15 +162,13 @@ public class Long_Control : MonoBehaviour
         attackTimer = attackInterval;
         initialAttackPosition = rigid.position;
 
-        yield return new WaitForSeconds(0.5f);
-
         PlayerUI playerHealth = target.GetComponent<PlayerUI>();
         if(playerHealth != null)
         {
             playerHealth.Damage(10f);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
         // // Resume charging attack
         // while (attackChargeTimer > 0)
@@ -177,7 +177,7 @@ public class Long_Control : MonoBehaviour
         //     attackIndicator.fillAmount = (attackChargeTime - attackChargeTimer) / attackChargeTime;
         //     yield return null;
         // }
-
+        yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         isAttacking = false;
         anim.SetBool("isAttacking", false);
     }
@@ -188,23 +188,71 @@ public class Long_Control : MonoBehaviour
             return;
 
         _health -= damage;
+        Debug.Log(_health);
         if (_health <= 0)
         {
-            FakeDie();
+            if(NOD == 1)
+            {
+                Die();
+            }
+            else
+            {
+                FakeDie();
+            }
         }
     }
 
     void FakeDie()
     {
         isLive = false;
+        anim.SetBool("isFakeDie", true);
+        anim.SetFloat(Horizontal, lastHorizontal);
+        anim.SetFloat(Vertical, lastVertical);
         Debug.Log("Monster fakedied");
-        Destroy(gameObject);
+        isHeal = true;
+
+        StartCoroutine(Resurrection());
+    }
+
+    IEnumerator Resurrection()
+    {
+        yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("FakeDie") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        if(isHeal)
+        {
+            anim.SetBool("isHeal", true);
+            Debug.Log("Monster Healing");
+
+            yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Resurrection") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+            isLive = true;
+            anim.SetBool("isLive", true);
+            anim.SetBool("isHeal", false);
+            isHeal = false;
+            anim.SetBool("isFakeDie", false);
+            _health = 1000f;
+            NOD++;
+            Debug.Log("부활");
+        }
+        else
+        {
+            Debug.Log("오류");
+        }
     }
 
     void Die()
     {
         isLive = false;
+        StartCoroutine(Death());
+    }
+
+    IEnumerator Death()
+    {
+        anim.SetBool("isRealDie", true);
+        anim.SetBool("isLive", false);
+        anim.SetFloat(Horizontal, lastHorizontal);
+        anim.SetFloat(Vertical, lastVertical);
         Debug.Log("Monster died");
+        yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Die") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         Destroy(gameObject);
     }
 }

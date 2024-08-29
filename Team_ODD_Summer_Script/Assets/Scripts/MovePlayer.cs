@@ -47,6 +47,9 @@ public class MovePlayer : MonoBehaviour
     public GameObject AttackEffectObject;
     private Vector2 EffectPosition = Vector2.zero;
 
+    public Short_Control monster;
+    public float attackDamage = 100f;
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -63,6 +66,10 @@ public class MovePlayer : MonoBehaviour
         PlayerRotation();
         UpdateState();
         Skills();
+        if (Input.GetMouseButtonDown(0)) // 마우스 좌클릭 입력을 체크
+        {
+            Attack(); // 공격 메서드 호출
+        }
     }
     private void FixedUpdate()
     {
@@ -430,4 +437,11 @@ public class MovePlayer : MonoBehaviour
         yield return null;
     }
 
+    void Attack()
+    {
+        if (monster != null) // 몬스터가 존재하는지 확인
+        {
+            monster.TakeDamage(attackDamage); // 몬스터의 체력을 깎음
+        }
+    }
 }
