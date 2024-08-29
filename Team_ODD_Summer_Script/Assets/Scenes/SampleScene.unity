@@ -200,7 +200,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -470,7 +470,6 @@ MonoBehaviour:
   attackDuration1: 0.35
   attackDuration2: 0.35
   attackDuration3: 0.5
-  comboDuration: 1
   AttackEffectObject: {fileID: 584300642}
   monster: {fileID: 0}
   attackDamage: 100
@@ -1040,6 +1039,8 @@ GameObject:
   m_Component:
   - component: {fileID: 584300644}
   - component: {fileID: 584300643}
+  - component: {fileID: 584300646}
+  - component: {fileID: 584300645}
   m_Layer: 0
   m_Name: Effect
   m_TagString: Untagged
@@ -1114,6 +1115,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &584300645
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584300642}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &584300646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584300642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625ba9c98fc488546b87a69eeb77d982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &678231148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,9 +1960,9 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &965333952
@@ -1968,7 +2026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1137940882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2192,7 +2250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1254468855
 Transform:
   m_ObjectHideFlags: 0
@@ -2479,13 +2537,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 150
-  damageDelay: 2
   HpBarSlider: {fileID: 427536004}
-  textHP: {fileID: 129119346}
-  img_Skill1: {fileID: 1940206315}
-  img_Skill2: {fileID: 965333951}
-  count1: 0
-  count2: 0
+  ComboSlider: {fileID: 871403031}
+  DashCoolTimeImage: {fileID: 1940206315}
+  AttackCoolTimeImage: {fileID: 965333951}
 --- !u!1 &1401337923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,7 +2671,7 @@ GameObject:
   - component: {fileID: 1579500095}
   m_Layer: 0
   m_Name: Long_Mob_Test
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3215,9 +3270,9 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1940206316
@@ -3341,7 +3396,7 @@ GameObject:
   - component: {fileID: 2139028121}
   - component: {fileID: 2139028120}
   m_Layer: 0
-  m_Name: 0
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3525,10 +3580,9 @@ MonoBehaviour:
   moveSpeed: 10
   dashSpeed: 80
   dashDuration: 0.1625
-  attackDuration1: 0.2
-  attackDuration2: 0.2
-  attackDuration3: 0.35
-  comboDuration: 1
+  attackDuration1: 0.25
+  attackDuration2: 0.25
+  attackDuration3: 0.5
   AttackEffectObject: {fileID: 584300642}
   monster: {fileID: 0}
   attackDamage: 100
