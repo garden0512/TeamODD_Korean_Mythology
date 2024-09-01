@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WT_Skill : MonoBehaviour
 {
@@ -13,10 +14,16 @@ public class WT_Skill : MonoBehaviour
     private Vector2 initialAttackPosition;
     private float rushSpeedMultiplier = 3f;
     private WT_Control control;
+    private Animator anim;
+    private static readonly int Horizontal = Animator.StringToHash("Horizontal");
+    private static readonly int Vertical = Animator.StringToHash("Vertical");
+    private float lastHorizontal = 0f;
+    private float lastVertical = 0f;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         attackTimer = attackInterval;
         //control = WT_Control.instance;
     }
@@ -35,7 +42,7 @@ public class WT_Skill : MonoBehaviour
     {
         if (isAttacking)
             return;
-        StartCoroutine(PerformAttack());
+        StartCoroutine(Vert());
     }
 
     //횡(세로)베기
@@ -43,7 +50,7 @@ public class WT_Skill : MonoBehaviour
     {
         if (isAttacking)
             return;
-        StartCoroutine(PerformAttack());
+        StartCoroutine(Hor());
         
     }
 
@@ -78,23 +85,63 @@ public class WT_Skill : MonoBehaviour
 
     }
 
-    IEnumerator PerformAttack()
+    IEnumerator Vert()
     {
         isAttacking = true;
+        anim.SetBool("isVert", true);
+        anim.SetFloat(Horizontal, lastHorizontal);
+        anim.SetFloat(Vertical, lastVertical);
         attackTimer = attackInterval;
         initialAttackPosition = rigid.position;
-
-        yield return new WaitForSeconds(0.5f);
-
         PlayerUI playerHealth = target.GetComponent<PlayerUI>();
         if(playerHealth != null)
         {
             playerHealth.Damage(10f);
         }
 
-        yield return new WaitForSeconds(0.5f);
+         yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Vert_Slash") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
         isAttacking = false;
+         anim.SetBool("isVert", false);
+    }
+
+    IEnumerator Hor()
+    {
+        isAttacking = true;
+        anim.SetBool("isHor", true);
+        anim.SetFloat(Horizontal, lastHorizontal);
+        anim.SetFloat(Vertical, lastVertical);
+        attackTimer = attackInterval;
+        initialAttackPosition = rigid.position;
+        PlayerUI playerHealth = target.GetComponent<PlayerUI>();
+        if(playerHealth != null)
+        {
+            playerHealth.Damage(10f);
+        }
+
+        yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Hor_Slash") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        isAttacking = false;
+        anim.SetBool("isHor", false);
+    }
+    IEnumerator PerformAttack()
+    {
+        isAttacking = true;
+        anim.SetBool("isTP", true);
+        anim.SetFloat(Horizontal, lastHorizontal);
+                anim.SetFloat(Vertical, lastVertical);
+        attackTimer = attackInterval;
+        initialAttackPosition = rigid.position;
+        PlayerUI playerHealth = target.GetComponent<PlayerUI>();
+        if(playerHealth != null)
+        {
+            playerHealth.Damage(10f);
+        }
+
+        yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Tap_Down") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        isAttacking = false;
+        anim.SetBool("isTP", false);
     }
 
     IEnumerator RushToPlayer()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WT_Control : MonoBehaviour
 {
@@ -45,6 +46,12 @@ public class WT_Control : MonoBehaviour
     private bool isAttacking = false;
     private WT_Skill wtskill;
     private Vector2 initialAttackPosition;
+    private Animator anim;
+    private static readonly int Horizontal = Animator.StringToHash("Horizontal");
+    private static readonly int Vertical = Animator.StringToHash("Vertical");
+    private float lastHorizontal = 0f;
+    private float lastVertical = 0f;
+    private bool isHeal = false;
     
     void Awake()
     {
@@ -59,6 +66,7 @@ public class WT_Control : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         wtskill = GetComponent<WT_Skill>();
+        anim = GetComponent<Animator>();
         SetRandomDirection();
         _health = maxHealth;
     }
@@ -85,6 +93,7 @@ public class WT_Control : MonoBehaviour
                 Vector2 dirVec = target.position - rigid.position;
                 Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
                 rigid.MovePosition(rigid.position + nextVec);
+                AnimeUpdate(dirVec);
             }
             _isPlayerInRange = true;
             //Debug.Log("isPlayerInRange = true");
@@ -100,17 +109,11 @@ public class WT_Control : MonoBehaviour
             }
             Vector2 nextVec = randomDirection * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
+            AnimeUpdate(randomDirection);
         }
 
         rigid.velocity = Vector2.zero;
     }
-
-    // void LateUpdate()
-    // {
-    //     if (!isLive || isAttacking)
-    //         return;
-    //     spriter.flipX = target.position.x < rigid.position.x;
-    // }
 
     void SetRandomDirection()
     {
@@ -131,13 +134,31 @@ public class WT_Control : MonoBehaviour
         }
     }
 
+    private void AnimeUpdate(Vector2 direction)
+    {
+        if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            anim.SetFloat(Horizontal, direction.x > 0 ? 1 : -1);
+            anim.SetFloat(Vertical, 0);
+            lastHorizontal = direction.x > 0 ? 1 : -1;
+            lastVertical = 0;
+        }
+        else
+        {
+            anim.SetFloat(Horizontal, 0);
+            anim.SetFloat(Vertical, direction.y > 0 ? 1 : -1);
+            lastHorizontal = 0;
+            lastVertical = direction.y > 0 ? 1 : -1;
+        }
+    }
+
     void UseRandomSkill()
     {
         if(wtskill == null)
         {
             return;
         }
-        int randomSkill = Random.Range(0, 4);
+        int randomSkill = Random.Range(0, 3);
         switch (randomSkill)
         {
             case 0:
@@ -152,10 +173,10 @@ public class WT_Control : MonoBehaviour
                 wtskill.TapDown();
                 Debug.Log("Using Tap Down");
                 break;
-            case 3:
-                wtskill.Rush();
-                Debug.Log("Using Rush");
-                break;
+            // case 3:
+            //     wtskill.Rush();
+            //     Debug.Log("Using Rush");
+            //     break;
         }
     }
 
