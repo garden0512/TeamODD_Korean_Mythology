@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Short_Control : MonoBehaviour
 {
-    public static Short_Control instance;
+    public Short_Control instance;
     [Tooltip("몬스터의 움직임에 관한 변수들입니다.")]
     [Header("Monster Move Info")]
     public float speed;
@@ -239,5 +239,10 @@ public class Short_Control : MonoBehaviour
         Debug.Log("Monster died");
         yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Die") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         Destroy(gameObject);
+    }
+
+    void OnEnable()
+    {
+        target = MovePlayer.instance.GetComponent<Rigidbody2D>();
     }
 }
