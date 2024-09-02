@@ -127,6 +127,7 @@ MonoBehaviour:
   target: {fileID: 0}
   maxHealth: 1000
   attackChargeTime: 2
+  background: {fileID: 0}
 --- !u!50 &6832277948341080028
 Rigidbody2D:
   serializedVersion: 4
@@ -186,6 +187,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 20.48, y: 20.48}
+  m_Offset: {x: -0.15779972, y: -0.554169}
+  m_Size: {x: 7.5404005, y: 14.869766}
   m_Direction: 0
