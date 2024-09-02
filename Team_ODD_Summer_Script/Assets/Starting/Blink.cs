@@ -35,7 +35,6 @@ public class Blink : MonoBehaviour
         if (!isKeyPressed && Input.anyKeyDown)
         {
             isKeyPressed = true;
-            ClickAny.GetComponent<SpriteRenderer>().DOFade(0,1);
         }
     }
 }

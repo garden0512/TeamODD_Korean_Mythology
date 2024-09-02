@@ -155,6 +155,7 @@ MonoBehaviour:
   Bird: {fileID: 1214856810}
   Bird_2: {fileID: 1584909041}
   Supernova: {fileID: 944036351}
+  ClickAny: {fileID: 293039201}
   StartB: {fileID: 1320287519}
   Load: {fileID: 1085935030}
   Setting: {fileID: 1478657145}
@@ -162,7 +163,7 @@ MonoBehaviour:
   BirdSpeed: 2
   BirdShrink: 0.5
   SuperFadeSpeed: 1
-  supernovaRightPosition: {x: 8, y: 0, z: 0}
+  trx: 565
 --- !u!4 &27211126
 Transform:
   m_ObjectHideFlags: 0
@@ -553,6 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 293039205}
+  ClickAny: {fileID: 0}
 --- !u!212 &293039204
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1183,7 +1185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1214856811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1592,7 +1594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1584909042
 RectTransform:
   m_ObjectHideFlags: 0

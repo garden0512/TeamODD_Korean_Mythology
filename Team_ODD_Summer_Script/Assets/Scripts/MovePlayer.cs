@@ -76,8 +76,9 @@ public class MovePlayer : MonoBehaviour
     {
         if (isDie)
         {
-            spriteRenderer.color = new Color32(255, 255, 255, 255);
             StopCoroutine("BlinkTime");
+            spriteRenderer.color = new Color32(255, 255, 255, 255);
+            getHitted = false;
             anim.SetBool("isDie", true);
             rd.velocity = movement * 0f;
             return;
