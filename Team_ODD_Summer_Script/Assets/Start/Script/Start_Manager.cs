@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class Start_Manager : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class Start_Manager : MonoBehaviour
     public GameObject Bird;
     public GameObject Bird_2;
     public GameObject Supernova;
+    public GameObject ClickAny;
     public Button StartB;
     public Button Load;
     public Button Setting;
@@ -16,9 +20,10 @@ public class Start_Manager : MonoBehaviour
     public float BirdSpeed = 2.0f;
     public float BirdShrink = 0.5f;
     public float SuperFadeSpeed = 1.0f;
-    public Vector3 supernovaRightPosition = new Vector3(8, 0, 0);
-
     private bool isKeyPressed = false;
+    [Header("Recognition Info")]
+    public float trx = 0f;
+
 
     void Start()
     {
@@ -40,30 +45,20 @@ public class Start_Manager : MonoBehaviour
 
     IEnumerator StartSequence()
     {
-        // Bird와 Bird_2 오브젝트의 이동 및 축소
-        yield return StartCoroutine(MoveAndShrink(Bird));
-        yield return StartCoroutine(MoveAndShrink(Bird_2));
-
-        // Supernova 오브젝트의 페이드아웃
-        yield return StartCoroutine(FadeOut(Supernova));
-
-        // Supernova 오브젝트 위치 변경 및 좌우 반전
-        Supernova.transform.position = supernovaRightPosition;
-        Supernova.transform.localScale = new Vector3(-1, 1, 1);  // 좌우반전
-
-        // Supernova 오브젝트의 페이드인
-        yield return StartCoroutine(FadeIn(Supernova));
-
-        // 버튼 표시
+        Supernova.transform.DOMoveX(trx,1f);
+        Supernova.transform.DORotate(new Vector3(0, 180, 0), 1);
+        Bird.transform.DOMove(new Vector3(1, 1, 0), 1);
+        ClickAny.GetComponent<SpriteRenderer>().DOFade(0,1);
+        yield return null;
         ShowButtons();
     }
 
-    IEnumerator MoveAndShrink(GameObject obj)
+    IEnumerator MoveAndShrink(GameObject obj, Vector2 direction)
     {
         Vector3 initialScale = obj.transform.localScale;
         while (obj.transform.localScale.x > 0.01f)
         {
-            obj.transform.position += Vector3.one * BirdSpeed * Time.deltaTime;
+            obj.transform.position += (Vector3)direction * BirdSpeed * Time.deltaTime;
             obj.transform.localScale -= Vector3.one * BirdShrink * Time.deltaTime;
             yield return null;
         }
@@ -81,21 +76,6 @@ public class Start_Manager : MonoBehaviour
         while (canvasGroup.alpha > 0)
         {
             canvasGroup.alpha -= SuperFadeSpeed * Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    IEnumerator FadeIn(GameObject obj)
-    {
-        CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            canvasGroup = obj.AddComponent<CanvasGroup>();
-        }
-
-        while (canvasGroup.alpha < 1)
-        {
-            canvasGroup.alpha += SuperFadeSpeed * Time.deltaTime;
             yield return null;
         }
     }
@@ -127,5 +107,21 @@ public class Start_Manager : MonoBehaviour
             rectTransform.localScale = Vector3.Lerp(rectTransform.localScale, targetScale, Time.deltaTime * 5f);
             yield return null;
         }
+    }
+
+    public void StartPlay()
+    {
+        StartCoroutine(StartScene("SampleScene"));
+    }
+
+    public void EndGame()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+
+    IEnumerator StartScene(string sceneName)
+    {
+        yield return null;
+        SceneManager.LoadScene(sceneName);
     }
 }
