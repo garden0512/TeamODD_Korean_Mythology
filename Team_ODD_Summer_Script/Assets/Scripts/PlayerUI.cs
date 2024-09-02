@@ -40,7 +40,7 @@ public class PlayerUI : MonoBehaviour
     {
         if(MovePlayer.countComboTime <= MovePlayer.comboDuration)
         {
-            ComboSlider.value = MovePlayer.countComboTime / MovePlayer.comboDuration;
+            ComboSlider.value = 1- MovePlayer.countComboTime / MovePlayer.comboDuration;
 
         }
         if (MovePlayer.countCoolTime <= MovePlayer.dashCooltime)
@@ -82,13 +82,16 @@ public class PlayerUI : MonoBehaviour
         }
 
     }
-
     public void Die()
     {
         MovePlayer.isDie = true;
 
+        Invoke("youDieScene", 2f);
+    }
 
-        //youDie.SetActive(true);
+    public void youDieScene()
+    {
+        youDie.SetActive(true);
     }
 
 }

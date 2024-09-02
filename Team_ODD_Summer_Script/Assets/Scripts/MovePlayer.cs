@@ -41,7 +41,7 @@ public class MovePlayer : MonoBehaviour
     [SerializeField] public static float comboDuration = 1f;
 
     public static float countAttackTime = 0f;
-    public static float countComboTime = 0f;
+    public static float countComboTime = 1f;
     private float countDashTime = 0f;
     public static float countCoolTime = 0f;
 
@@ -68,12 +68,16 @@ public class MovePlayer : MonoBehaviour
     private void Start()
     {
         AttackEffectObject.SetActive(false);
+        isDie = false;
+
     }
 
     void Update()
     {
-        if (isDie == true)
+        if (isDie)
         {
+            spriteRenderer.color = new Color32(255, 255, 255, 255);
+            StopCoroutine("BlinkTime");
             anim.SetBool("isDie", true);
             rd.velocity = movement * 0f;
             return;
@@ -85,7 +89,7 @@ public class MovePlayer : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (isDie == true)
+        if (isDie)
         {
             anim.SetBool("isDie", true);
             rd.velocity = movement * 0f;
@@ -440,6 +444,7 @@ public class MovePlayer : MonoBehaviour
         PlayerUI.currentHealth -= PlayerUI.damage;
         while (countTime < 4)
         {
+
             if (countTime % 2 == 0)
             {
                 spriteRenderer.color = new Color32(255, 255, 255, 130);
