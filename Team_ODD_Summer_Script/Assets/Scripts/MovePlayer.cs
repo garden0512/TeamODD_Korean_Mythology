@@ -48,6 +48,9 @@ public class MovePlayer : MonoBehaviour
     public GameObject AttackEffectObject;
     private Vector2 EffectPosition = Vector2.zero;
 
+    public static bool isDie = false;
+
+
     void Awake()
     {
         if (instance == null)
@@ -69,12 +72,26 @@ public class MovePlayer : MonoBehaviour
 
     void Update()
     {
+        if (isDie == true)
+        {
+            anim.SetBool("isDie", true);
+            rd.velocity = movement * 0f;
+            return;
+        }
+
         PlayerRotation();
         UpdateState();
         Skills();
     }
     private void FixedUpdate()
     {
+        if (isDie == true)
+        {
+            anim.SetBool("isDie", true);
+            rd.velocity = movement * 0f;
+            return;
+        }
+
         MoveCharactor();
     }
     
@@ -170,6 +187,7 @@ public class MovePlayer : MonoBehaviour
     }
     private void UpdateState()
     {
+
         if (Mathf.Approximately(movement.x, 0) && Mathf.Approximately(movement.y , 0))
         {
             isMoving = false;

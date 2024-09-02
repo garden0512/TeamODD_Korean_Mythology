@@ -13,7 +13,7 @@ public class PlayerUI : MonoBehaviour
     public Slider HpBarSlider;
     public Slider ComboSlider;
     //public TMP_Text textHP;
-    
+    public GameObject youDie;
     public Image DashCoolTimeImage;
     public Image AttackCoolTimeImage;    
 
@@ -85,7 +85,10 @@ public class PlayerUI : MonoBehaviour
 
     public void Die()
     {
+        MovePlayer.isDie = true;
 
+
+        //youDie.SetActive(true);
     }
 
 }
