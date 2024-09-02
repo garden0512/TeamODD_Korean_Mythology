@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Short_Control : MonoBehaviour
 {
@@ -39,7 +40,8 @@ public class Short_Control : MonoBehaviour
     }
     [Header("Attack Indicator")]
     public float attackChargeTime = 2f; // Time it takes to fully charge the attack
-
+    [Header("Background Settings")]
+    public SpriteRenderer background;
     Rigidbody2D rigid;
     SpriteRenderer spriter;
     private float attackInterval = 3f;
@@ -107,6 +109,7 @@ public class Short_Control : MonoBehaviour
             {
                 SetRandomDirection();
             }
+            CheckAndCorrectDirectionWithinBounds();
             Vector2 nextVec = randomDirection * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
             AnimeUpdate(randomDirection);
@@ -118,6 +121,53 @@ public class Short_Control : MonoBehaviour
     void SetRandomDirection()
     {
         randomDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        changeDirectionTimer = changeDirectionTime;
+    }
+
+    void CheckAndCorrectDirectionWithinBounds()
+    {
+        Bounds bounds = background.bounds; // 배경의 경계
+
+        // 현재 위치
+        Vector2 position = rigid.position;
+
+        // 경계와의 거리 계산
+        float distanceToLeft = position.x - bounds.min.x;
+        float distanceToRight = bounds.max.x - position.x;
+        float distanceToBottom = position.y - bounds.min.y;
+        float distanceToTop = bounds.max.y - position.y;
+
+        // 북쪽 경계와의 거리가 가까운 경우
+        if (distanceToTop < 1f && randomDirection.y > 0)
+        {
+            SetRandomDirectionExcluding(Vector2.up);
+        }
+        // 남쪽 경계와의 거리가 가까운 경우
+        else if (distanceToBottom < 1f && randomDirection.y < 0)
+        {
+            SetRandomDirectionExcluding(Vector2.down);
+        }
+        // 동쪽 경계와의 거리가 가까운 경우
+        else if (distanceToRight < 1f && randomDirection.x > 0)
+        {
+            SetRandomDirectionExcluding(Vector2.right);
+        }
+        // 서쪽 경계와의 거리가 가까운 경우
+        else if (distanceToLeft < 1f && randomDirection.x < 0)
+        {
+            SetRandomDirectionExcluding(Vector2.left);
+        }
+    }
+
+    void SetRandomDirectionExcluding(Vector2 excludedDirection)
+    {
+        Vector2 newDirection;
+        do
+        {
+            newDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        } while (Vector2.Dot(newDirection, excludedDirection) > 0.7f); // 제외할 방향과 비슷한 경우 다시 랜덤 생성
+
+        randomDirection = newDirection;
         changeDirectionTimer = changeDirectionTime;
     }
 
@@ -244,5 +294,6 @@ public class Short_Control : MonoBehaviour
     void OnEnable()
     {
         target = MovePlayer.instance.GetComponent<Rigidbody2D>();
+        background = World_Manager.instance.backimage.GetComponent<SpriteRenderer>();
     }
 }
