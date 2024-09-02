@@ -437,6 +437,7 @@ public class MovePlayer : MonoBehaviour
             getHitted = true;
             StartCoroutine("BlinkTime");
         }
+
     }
 
     IEnumerator BlinkTime()
