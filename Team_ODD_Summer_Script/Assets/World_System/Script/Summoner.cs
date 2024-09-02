@@ -8,7 +8,7 @@ public class Summoner : MonoBehaviour
 {
     public GameObject shortMobPrefab;
     public GameObject longMobPrefab;
-    public Transform spawnArea;
+    public SpriteRenderer background;  // 배경 이미지의 SpriteRenderer
 
     private int shortMobCount = 0;
     private int longMobCount = 0;
@@ -57,12 +57,8 @@ public class Summoner : MonoBehaviour
 
     void SpawnSelectedMob(GameObject mobPrefab)
     {
-        // 맵 안에서 랜덤 위치 선택
-        Vector3 spawnPosition = new Vector3(
-            Random.Range(spawnArea.position.x - spawnArea.localScale.x / 2, spawnArea.position.x + spawnArea.localScale.x / 2),
-            Random.Range(spawnArea.position.y - spawnArea.localScale.y / 2, spawnArea.position.y + spawnArea.localScale.y / 2),
-            0f
-        );
+        // 경계 내 무작위 위치 선택
+        Vector3 spawnPosition = GetRandomPositionWithinBounds();
 
         GameObject newMob = Instantiate(mobPrefab, spawnPosition, Quaternion.identity);
         currentMobs.Add(newMob);
@@ -75,12 +71,16 @@ public class Summoner : MonoBehaviour
         {
             longMobCount++;
         }
+    }
 
-        // // 만약 오브젝트가 6개를 넘었다면 가장 먼저 소환된 오브젝트 제거
-        // if (currentMobs.Count > maxMobCount)
-        // {
-        //     Destroy(currentMobs[0]);
-        //     currentMobs.RemoveAt(0);
-        // }
+    Vector3 GetRandomPositionWithinBounds()
+    {
+        // 배경 이미지의 경계를 기준으로 랜덤 위치를 선택
+        Bounds bounds = background.bounds;
+        return new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            0f
+        );
     }
 }
