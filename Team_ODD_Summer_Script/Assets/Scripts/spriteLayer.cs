@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class spriteLayer : MonoBehaviour
-{
+{/*
     private float x;
     private float y;
 
@@ -21,5 +21,27 @@ public class spriteLayer : MonoBehaviour
         x = tf.position.x;
         y = tf.position.y;
         tf.position = new Vector3(x, y, y / 1000.0f);
+    }*/
+
+    private SpriteRenderer spriteRenderer;
+
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    void Update()
+    {
+        // y 좌표에 따라 Order in Layer를 설정
+        if(transform.position.y >= 0)
+        {
+
+            spriteRenderer.sortingOrder = Mathf.RoundToInt((transform.position.y + 1) * 100);
+        }
+        else
+        {
+            spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+
+        }
     }
 }
