@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c08116cb1d273f45b7c409521fcff20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackEffectObject: {fileID: 4303963861129083387, guid: a55f2a18911deaf408ce3f81b690207e, type: 3}
+  AttackEffectObject: {fileID: 8871553707865294049, guid: a55f2a18911deaf408ce3f81b690207e, type: 3}
   instance: {fileID: 0}
   speed: 3
   detectionRadius: 20

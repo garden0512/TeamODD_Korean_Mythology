@@ -228,7 +228,7 @@ public class Long_Control : MonoBehaviour
 
         Vector2 snappedDirection = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
 
-        EffectPosition = (Vector2)transform.position + snappedDirection * 4f;
+        EffectPosition = (Vector2)transform.position + snappedDirection ;
         Quaternion effectRotation = Quaternion.Euler(0, 0, angle + 90);
 
         AttackEffectObject.transform.position = EffectPosition;
