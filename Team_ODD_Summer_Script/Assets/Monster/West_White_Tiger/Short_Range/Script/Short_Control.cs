@@ -26,7 +26,7 @@ public class Short_Control : MonoBehaviour
     [Tooltip("몬스터의 체력에 대한 변수들입니다.")]
     [Header("Monster HP Info")]
     public float maxHealth = 1000f;
-    public static float _health;
+    public float _health;
     public float health
     {
         get => _health;
