@@ -16,16 +16,45 @@ public class Summoner : MonoBehaviour
 
     private List<GameObject> currentMobs = new List<GameObject>();
 
+    public GameObject Enemy;
+    public GameObject[] enemies;
+
     void Start()
     {
         StartCoroutine(SpawnMobs());
     }
 
+    // void Update()
+    // {
+    //     // 현재 리스트에서 비활성화된 몬스터 제거
+    //     for (int i = currentMobs.Count - 1; i >= 0; i--)
+    //     {
+    //         if (currentMobs[i] == null || !currentMobs[i].activeInHierarchy)
+    //         {
+    //             // 몬스터가 제거된 경우 리스트에서 삭제
+    //             if (currentMobs[i].activeSelf == false)  // Check if it is inactive
+    //             {
+    //                 currentMobs.RemoveAt(i);
+    //                 // 카운트 업데이트
+    //                 if (currentMobs[i] == shortMobPrefab)
+    //                 {
+    //                     shortMobCount--;
+    //                 }
+    //                 else if (currentMobs[i] == longMobPrefab)
+    //                 {
+    //                     longMobCount--;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     IEnumerator SpawnMobs()
     {
         while (shortMobCount < maxMobPerType || longMobCount < maxMobPerType)
         {
-            if (currentMobs.Count < maxMobCount)
+            enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if (enemies.Length < maxMobCount)
             {
                 SpawnMob();
             }
