@@ -26,7 +26,7 @@ public class Short_Control : MonoBehaviour
     [Tooltip("몬스터의 체력에 대한 변수들입니다.")]
     [Header("Monster HP Info")]
     public float maxHealth = 1000f;
-    private float _health;
+    public static float _health;
     public float health
     {
         get => _health;
@@ -74,6 +74,11 @@ public class Short_Control : MonoBehaviour
         _health = maxHealth;
         attackChargeTimer = attackChargeTime;
         //OnEnable();
+    }
+
+    private void Update()
+    {
+        TakeDamage();
     }
 
     void FixedUpdate()
@@ -218,12 +223,11 @@ public class Short_Control : MonoBehaviour
         anim.SetBool("isAttacking", false);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage()
     {
         if (!isLive)
             return;
 
-        _health -= damage;
         Debug.Log(_health);
         if (_health <= 0)
         {
@@ -325,6 +329,13 @@ public class Short_Control : MonoBehaviour
         else
         {
             Debug.LogError("World_Manager.instance is not assigned.");
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Effect")
+        {
+            _health -= 250;
         }
     }
 }

@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 293039205}
-  ClickAny: {fileID: 293039201}
+  ClickAny: {fileID: 0}
 --- !u!212 &293039204
 SpriteRenderer:
   m_ObjectHideFlags: 0
