@@ -8,6 +8,7 @@ TagManager:
   - DashingPlayer
   - UnPlayer
   - Wall
+  - Effect
   layers:
   - Default
   - TransparentFX

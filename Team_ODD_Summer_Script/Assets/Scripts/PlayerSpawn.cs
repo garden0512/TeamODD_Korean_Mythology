@@ -12,6 +12,7 @@ public class PlayerSpawn : MonoBehaviour
     void Start()
     {
         playerspawn.SetActive(true);
+        player.SetActive(false);
 
         otherObject.GetComponent<MovePlayer>().enabled = false;
 
