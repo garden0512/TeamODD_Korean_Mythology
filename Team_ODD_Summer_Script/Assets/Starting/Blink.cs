@@ -20,11 +20,11 @@ public class Blink : MonoBehaviour
         }
         if (time < 0.5f)
         {
-            textMeshPro.color = new Color(0, 0, 0, 1 - time);
+            textMeshPro.color = new Color(1, 1, 1, 1 - time);
         }
         else
         {
-            textMeshPro.color = new Color(0, 0, 0, time);
+            textMeshPro.color = new Color(1, 1, 1, time);
             if (time > 1f)
             {
                 time = 0;
@@ -35,7 +35,6 @@ public class Blink : MonoBehaviour
         if (!isKeyPressed && Input.anyKeyDown)
         {
             isKeyPressed = true;
-            ClickAny.GetComponent<SpriteRenderer>().DOFade(0,1);
         }
     }
 }

@@ -48,7 +48,7 @@ public class Start_Manager : MonoBehaviour
         Supernova.transform.DOMoveX(trx,1f);
         Supernova.transform.DORotate(new Vector3(0, 180, 0), 1);
         Bird.transform.DOMove(new Vector3(1, 1, 0), 1);
-        ClickAny.GetComponent<SpriteRenderer>().DOFade(0,1);
+        ClickAny.GetComponent<SpriteRenderer>().DOFade(0, 1).OnComplete(() => ClickAny.SetActive(false));
         yield return null;
         ShowButtons();
     }
@@ -116,7 +116,7 @@ public class Start_Manager : MonoBehaviour
 
     public void EndGame()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
     }
 
     IEnumerator StartScene(string sceneName)
