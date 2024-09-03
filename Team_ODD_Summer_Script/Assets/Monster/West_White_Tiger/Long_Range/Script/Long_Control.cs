@@ -73,6 +73,7 @@ public class Long_Control : MonoBehaviour
         SetRandomDirection();
         _health = maxHealth;
         attackChargeTimer = attackChargeTime;
+        //OnEnable();
     }
 
     private void Update()
@@ -311,8 +312,38 @@ public class Long_Control : MonoBehaviour
 
     void OnEnable()
     {
-        target = MovePlayer.instance.GetComponent<Rigidbody2D>();
-        background = World_Manager.instance.backimage.GetComponent<SpriteRenderer>();
+        if (MovePlayer.instance != null)
+        {
+            target = MovePlayer.instance.GetComponent<Rigidbody2D>();
+            if (target == null)
+            {
+                Debug.LogError("MovePlayer.instance does not have a Rigidbody2D component.");
+            }
+        }
+        else
+        {
+            Debug.LogError("MovePlayer.instance is not assigned.");
+        }
+
+        if (World_Manager.instance != null)
+        {
+            if (World_Manager.instance.backimage != null)
+            {
+                background = World_Manager.instance.backimage.GetComponent<SpriteRenderer>();
+                if (background == null)
+                {
+                    Debug.LogError("World_Manager.backimage does not have a SpriteRenderer component.");
+                }
+            }
+            else
+            {
+                Debug.LogError("World_Manager.instance.backimage is not assigned.");
+            }
+        }
+        else
+        {
+            Debug.LogError("World_Manager.instance is not assigned.");
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
