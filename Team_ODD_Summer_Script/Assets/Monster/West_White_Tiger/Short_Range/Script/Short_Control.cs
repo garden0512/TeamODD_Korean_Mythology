@@ -227,7 +227,6 @@ public class Short_Control : MonoBehaviour
         if (!isLive)
             return;
 
-        Debug.Log(_health);
         if (_health <= 0)
         {
             if(NOD == 1)

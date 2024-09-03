@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-/*
-    void OnTriggerEnter2D(Collider2D other)
+
+    void OnParticleTrigger()
     {
-        if (other.gameObject.tag == "Enemy")
-        {
-            if (other.name.Contains("Short_Mob_Test(Clone)"))
+        
+            Short_Control._health -= 250f;
+            Long_Control._health -= 250f;
+            /*if (other.name.Contains("Short_Mob_Test(Clone)"))
             {
-                Short_Control._health -= 250f;
             }
 
             if (other.name.Contains("Long_Mob_Test(Clone)"))
             {
-                Long_Control._health -= 250f;
-            }
-        }
-    }*/
+            }*/
+    }
 
 }

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Long_Control : MonoBehaviour
 {
+    public GameObject AttackEffectObject;
+    private Vector2 EffectPosition = Vector2.zero;
+
     public Long_Control instance;
     [Tooltip("몬스터의 움직임에 관한 변수들입니다.")]
     [Header("Monster Move Info")]
@@ -216,24 +219,42 @@ public class Long_Control : MonoBehaviour
         attackTimer = attackInterval;
         initialAttackPosition = rigid.position;
 
+        Vector2 direction = transform.position.normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle = Mathf.Round(angle / 45) * 45;
+        float radian = angle * Mathf.Deg2Rad;
+
+        Vector2 snappedDirection = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+
+        EffectPosition = (Vector2)transform.position + snappedDirection * 4f;
+        Quaternion effectRotation = Quaternion.Euler(0, 0, angle + 90);
+
+        AttackEffectObject.transform.position = EffectPosition;
+        AttackEffectObject.transform.rotation = effectRotation;
+        AttackEffectObject.SetActive(true);
+
         PlayerUI playerHealth = target.GetComponent<PlayerUI>();
         if(playerHealth != null)
         {
             playerHealth.Damage(10f);
         }
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        // // Resume charging attack
-        // while (attackChargeTimer > 0)
-        // {
-        //     attackChargeTimer -= Time.deltaTime;
-        //     attackIndicator.fillAmount = (attackChargeTime - attackChargeTimer) / attackChargeTime;
-        //     yield return null;
-        // }
+        // Resume charging attack
+        while (attackChargeTimer > 0)
+         {
+             attackChargeTimer -= Time.deltaTime;
+             attackIndicator.fillAmount = (attackChargeTime - attackChargeTimer) / attackChargeTime;
+             yield return null;
+        }
+
+
         yield return new WaitUntil(()=> anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         isAttacking = false;
         anim.SetBool("isAttacking", false);
+        AttackEffectObject.SetActive(false);
     }
 
     public void TakeDamage()
@@ -241,7 +262,6 @@ public class Long_Control : MonoBehaviour
         if (!isLive)
             return;
 
-        Debug.Log(_health);
         if (_health <= 0)
         {
             if(NOD == 1)
