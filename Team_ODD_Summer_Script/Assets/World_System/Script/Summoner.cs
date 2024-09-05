@@ -11,17 +11,19 @@ public class Summoner : MonoBehaviour
 
     private int shortMobCount = 0;
     private int longMobCount = 0;
-    private int maxMobCount = 6;
-    private int maxMobPerType = 20;
+    private int maxMobCount = 8;
+    private int maxMobPerType = 10;
 
     private List<GameObject> currentMobs = new List<GameObject>();
 
     public GameObject Enemy;
     public GameObject[] enemies;
+    public GameObject demoObject;
 
     void Start()
     {
         StartCoroutine(SpawnMobs());
+        demoObject.SetActive(false);
     }
 
     // void Update()
@@ -80,6 +82,44 @@ public class Summoner : MonoBehaviour
         else if (longMobCount < maxMobPerType)
         {
             SpawnSelectedMob(longMobPrefab);
+        }
+        StartCoroutine(CheckAllMobsDead());
+    }
+
+    IEnumerator CheckAllMobsDead()
+    {
+        while (shortMobCount > 0 || longMobCount > 0)
+        {
+            // 현재 리스트에서 비활성화된 몬스터 제거
+            for (int i = currentMobs.Count - 1; i >= 0; i--)
+            {
+                if (currentMobs[i] == null || !currentMobs[i].activeInHierarchy)
+                {
+                    currentMobs.RemoveAt(i);
+
+                    // 카운트 업데이트
+                    if (currentMobs[i] == shortMobPrefab)
+                    {
+                        shortMobCount--;
+                    }
+                    else if (currentMobs[i] == longMobPrefab)
+                    {
+                        longMobCount--;
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(1f); // 1초마다 확인
+        }
+
+        // 모든 몬스터가 죽은 후 This_is_DEMO 활성화
+        if (demoObject != null)
+        {
+            demoObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("This_is_DEMO object is not assigned.");
         }
     }
 

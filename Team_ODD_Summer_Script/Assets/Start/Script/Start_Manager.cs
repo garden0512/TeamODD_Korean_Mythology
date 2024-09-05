@@ -117,6 +117,7 @@ public class Start_Manager : MonoBehaviour
     public void EndGame()
     {
         //UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 
     IEnumerator StartScene(string sceneName)

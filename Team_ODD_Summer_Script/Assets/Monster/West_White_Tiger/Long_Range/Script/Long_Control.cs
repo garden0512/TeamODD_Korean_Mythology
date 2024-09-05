@@ -59,6 +59,8 @@ public class Long_Control : MonoBehaviour
     private float lastVertical = 0f;
     private bool isHeal = false;
     private float NOD = 0f;
+    private ObjectPool effectPool;
+    private GameObject currentEffect;
 
     void Awake()
     {
@@ -77,6 +79,12 @@ public class Long_Control : MonoBehaviour
         _health = maxHealth;
         attackChargeTimer = attackChargeTime;
         //OnEnable();
+    }
+
+    void Start()
+    {
+        effectPool = FindObjectOfType<ObjectPool>();
+        AttackEffectObject.SetActive(false);
     }
 
     private void Update()
@@ -332,6 +340,7 @@ public class Long_Control : MonoBehaviour
 
     void OnEnable()
     {
+        effectPool = FindObjectOfType<ObjectPool>();
         if (MovePlayer.instance != null)
         {
             target = MovePlayer.instance.GetComponent<Rigidbody2D>();
@@ -364,6 +373,22 @@ public class Long_Control : MonoBehaviour
         {
             Debug.LogError("World_Manager.instance is not assigned.");
         }
+        if (effectPool != null)
+        {
+            currentEffect = effectPool.GetEffect(); // Effect 프리팹을 가져옴
+            if (currentEffect != null)
+            {
+                AttackEffectObject = currentEffect;
+            }
+            else
+            {
+                Debug.LogError("Failed to get an effect from the ObjectPool.");
+            }
+        }
+        else
+        {
+            Debug.LogError("ObjectPool is not assigned or found.");
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -371,5 +396,32 @@ public class Long_Control : MonoBehaviour
         {
             _health -= 250;
         }
+    }
+
+    public void ShowAttackEffect()
+    {
+        if (currentEffect != null)
+        {
+            effectPool.ReturnEffect(currentEffect);
+        }
+        currentEffect = effectPool.GetEffect();
+        currentEffect.transform.position = transform.position;
+
+        Vector2 direction = (target.position - (Vector2)transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float adjustedAngle = angle - 90f;
+        currentEffect.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        currentEffect.SetActive(true);
+    }
+
+    public void HideAttackEffect()
+    {
+        if (currentEffect != null)
+        {
+            effectPool.ReturnEffect(currentEffect);
+            currentEffect = null;
+        }
+        AttackEffectObject.SetActive(false);
     }
 }
