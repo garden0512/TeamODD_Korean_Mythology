@@ -163,7 +163,7 @@ MonoBehaviour:
   BirdSpeed: 2
   BirdShrink: 0.5
   SuperFadeSpeed: 1
-  trx: 565
+  trx: 1960
 --- !u!4 &27211126
 Transform:
   m_ObjectHideFlags: 0
@@ -1405,6 +1405,7 @@ GameObject:
   - component: {fileID: 1320287521}
   - component: {fileID: 1320287520}
   - component: {fileID: 1320287519}
+  - component: {fileID: 1320287522}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -1526,6 +1527,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320287517}
   m_CullTransparentMesh: 1
+--- !u!114 &1320287522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320287517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de30a26b8d0062d449a22117dca71b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
+  scaleMultiplier: 2
 --- !u!1 &1478657143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,13 +1900,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 27211125}
+        m_TargetAssemblyTypeName: Start_Manager, Assembly-CSharp
+        m_MethodName: EndGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
